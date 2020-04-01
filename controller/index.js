@@ -13,3 +13,15 @@ exports.getAllBooks = (req, res) => {
     res.json({ newArray });
   });
 };
+
+exports.postBook = (req, res) => {
+  //response will contain new book object including atleast _id and title
+  const { title } = req.body;
+  const newBook = new Books({ title });
+
+  newBook.save((err, obj) => {
+    if (err) res.send(err);
+
+    res.json(obj);
+  });
+};
