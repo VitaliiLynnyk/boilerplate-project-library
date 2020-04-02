@@ -91,9 +91,16 @@ suite('Functional Tests', function() {
       });
     });
 
-    suite('GET /api/books/[id] => book object with [id]', function() {
-      test('Test GET /api/books/[id] with id not in db', function(done) {
-        done();
+    suite('GET /api/books/[id] => book object with [id]', () => {
+      test('Test GET /api/books/[id] with id not in db', done => {
+        chai
+          .request(server)
+          .get('/api/books/1bbc91985fbc3206e7beaec4')
+          .end((err, res) => {
+            assert.equal(res.status, 400);
+            assert.equal(res.text, 'does not exist');
+            done();
+          });
       });
 
       test('Test GET /api/books/[id] with valid id in db', function(done) {

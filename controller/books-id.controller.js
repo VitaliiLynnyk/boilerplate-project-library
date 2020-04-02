@@ -5,9 +5,9 @@ exports.getBookById = (req, res) => {
   const { id } = req.params;
 
   Books.findById({ _id: id }, (err, books) => {
-    if (!books) res.send('no book exists');
+    if (!books) res.status(400).send('no book exists');
 
-    res.json(books);
+    res.status(200).json(books);
   });
 };
 
