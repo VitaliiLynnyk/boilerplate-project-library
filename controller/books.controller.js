@@ -21,12 +21,14 @@ exports.getAllBooks = (req, res) => {
 exports.postBook = (req, res) => {
   //response will contain new book object including atleast _id and title
   const { title } = req.body;
+
+  if (!title) res.status(400).send('no title');
+
   const newBook = new Books({ title });
-
   newBook.save((err, obj) => {
-    if (err) res.send(err);
+    if (err) res.status(500).send(err);
 
-    res.json(obj);
+    res.status(200).json(obj);
   });
 };
 
