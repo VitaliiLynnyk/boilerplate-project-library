@@ -22,14 +22,14 @@ mongoose.connect(process.env.DB, {
 db.on('err', console.error.bind(console, 'connection error'));
 db.once('openURI', () => console.log('connected'));
 
-const books_controller = require('../controller');
+const { BooksController, BooksIdController } = require('../controller');
 
 module.exports = function(app) {
   app
     .route('/api/books')
-    .get(books_controller.getAllBooks)
-    .post(books_controller.postBook)
-    .delete(books_controller.deleteBooks);
+    .get(BooksController.getAllBooks)
+    .post(BooksController.postBook)
+    .delete(BooksController.deleteBooks);
 
   app
     .route('/api/books/:id')
