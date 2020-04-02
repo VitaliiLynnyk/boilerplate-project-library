@@ -5,7 +5,7 @@ exports.getAllBooks = (req, res) => {
   //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
 
   Books.find((err, books) => {
-    if (err) res.send(err);
+    if (err) res.status(500).send(err);
 
     const newBooks = books.map(book => {
       return {
@@ -14,7 +14,7 @@ exports.getAllBooks = (req, res) => {
       };
     });
 
-    res.json(newBooks);
+    res.status(200).json(newBooks);
   });
 };
 
