@@ -29,3 +29,12 @@ exports.postBook = (req, res) => {
     res.json(obj);
   });
 };
+
+exports.deleteBooks = (req, res) => {
+  //if successful response will be 'complete delete successful'
+  Books.deleteMany(err => {
+    if (err) res.send(err);
+
+    res.send('complete delete successful');
+  });
+};

@@ -29,10 +29,7 @@ module.exports = function(app) {
     .route('/api/books')
     .get(books_controller.getAllBooks)
     .post(books_controller.postBook)
-
-    .delete(function(req, res) {
-      //if successful response will be 'complete delete successful'
-    });
+    .delete(books_controller.deleteBooks);
 
   app
     .route('/api/books/:id')
