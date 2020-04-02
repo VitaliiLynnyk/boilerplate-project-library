@@ -34,11 +34,7 @@ module.exports = function(app) {
   app
     .route('/api/books/:id')
     .get(BooksIdController.getBookById)
-    .post(function(req, res) {
-      var bookid = req.params.id;
-      var comment = req.body.comment;
-      //json res format same as .get
-    })
+    .post(BooksIdController.addCommentToBook)
 
     .delete(function(req, res) {
       var bookid = req.params.id;

@@ -6,20 +6,24 @@ exports.getBookById = (req, res) => {
 
   Books.find({ _id: id }, (err, books) => {
     if (err) res.send(err);
-
-    const newBooks = books.map(book => {
-      return {
-        ...book._doc,
-        commentcount: book.comments ? book.comments.length : 0
-      };
-    });
-
-    res.json(newBooks);
+    res.json(books);
   });
 };
 
 exports.addCommentToBook = (req, res) => {
   //json res format same as .get
+  const { id } = req.params;
+  const { comment } = req.body;
+
+  Books.findByIdAndUpdate(
+    { _id: id },
+    { $addToSet: { comments: comment } },
+    { new: true, useFindAndModify: false },
+    (err, book) => {
+      if (err) res.send(err);
+      res.json(book);
+    }
+  );
 };
 
 exports.deleteBookById = (req, res) => {
