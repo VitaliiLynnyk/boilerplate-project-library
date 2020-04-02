@@ -95,10 +95,10 @@ suite('Functional Tests', function() {
       test('Test GET /api/books/[id] with id not in db', done => {
         chai
           .request(server)
-          .get('/api/books/ddd')
+          .get('/api/books/5e85b98aa8a10014e4f6b6dd')
           .end((err, res) => {
             assert.equal(res.status, 400);
-            assert.equal(res.text, 'does not exist');
+            assert.equal(res.text, 'no book exists');
             done();
           });
       });
@@ -116,9 +116,17 @@ suite('Functional Tests', function() {
 
     suite(
       'POST /api/books/[id] => add comment/expect book object with id',
-      function() {
-        test('Test POST /api/books/[id] with comment', function(done) {
-          done();
+      () => {
+        test('Test POST /api/books/[id] with comment', done => {
+          chai
+            .request(server)
+            .post('/api/books/5e85b98aa8a10014e4f6b6a4')
+            .send({ comment: 'test test' })
+            .end((err, res) => {
+              assert.equal(res.status, 200);
+              assert.isArray(res.body.comments);
+              done();
+            });
         });
       }
     );

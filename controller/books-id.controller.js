@@ -5,9 +5,9 @@ exports.getBookById = (req, res) => {
   const { id } = req.params;
 
   Books.findById({ _id: id }, (err, books) => {
-    if (!books) res.status(400).send('no book exists');
+    if (!books) return res.status(400).send('no book exists');
 
-    res.status(200).json(books);
+    return res.status(200).json(books);
   });
 };
 
@@ -21,8 +21,8 @@ exports.addCommentToBook = (req, res) => {
     { $addToSet: { comments: comment } },
     { new: true, useFindAndModify: false },
     (err, book) => {
-      if (err) res.send(err);
-      res.json(book);
+      if (err) return res.status(500).send(err);
+      return res.status(200).json(book);
     }
   );
 };
@@ -32,8 +32,8 @@ exports.deleteBookById = (req, res) => {
   const { id } = req.params;
 
   Books.findByIdAndRemove({ _id: id }, { useFindAndModify: false }, err => {
-    if (err) res.send(err);
+    if (err) return res.status(500).send(err);
 
-    res.send('delete successful');
+    return res.status(200).send('delete successful');
   });
 };
