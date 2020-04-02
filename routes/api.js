@@ -35,9 +35,5 @@ module.exports = function(app) {
     .route('/api/books/:id')
     .get(BooksIdController.getBookById)
     .post(BooksIdController.addCommentToBook)
-
-    .delete(function(req, res) {
-      var bookid = req.params.id;
-      //if successful response will be 'delete successful'
-    });
+    .delete(BooksIdController.deleteBookById);
 };

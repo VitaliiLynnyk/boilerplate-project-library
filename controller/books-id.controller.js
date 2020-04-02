@@ -4,8 +4,9 @@ exports.getBookById = (req, res) => {
   //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
   const { id } = req.params;
 
-  Books.find({ _id: id }, (err, books) => {
-    if (err) res.send(err);
+  Books.findById({ _id: id }, (err, books) => {
+    if (!books) res.send('no book exists');
+
     res.json(books);
   });
 };
@@ -28,4 +29,11 @@ exports.addCommentToBook = (req, res) => {
 
 exports.deleteBookById = (req, res) => {
   //if successful response will be 'delete successful'
+  const { id } = req.params;
+
+  Books.findByIdAndRemove({ _id: id }, { useFindAndModify: false }, err => {
+    if (err) res.send(err);
+
+    res.send('delete successful');
+  });
 };
