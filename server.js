@@ -45,18 +45,18 @@ app.use(function(req, res, next) {
 //Start our server and tests!
 app.listen(port, function() {
   console.log('Listening on port ' + port);
-  //if (process.env.NODE_ENV === 'test') {
-  // console.log('Running Tests...');
-  // setTimeout(function() {
-  //try {
-  //runner.run();
-  //} catch (e) {
-  //var error = e;
-  //console.log('Tests are not valid:');
-  //console.log(error);
-  //}
-  //}, 1500);
-  //}
+  if (process.env.NODE_ENV === 'test') {
+    console.log('Running Tests...');
+    setTimeout(function() {
+      try {
+        runner.run();
+      } catch (e) {
+        var error = e;
+        console.log('Tests are not valid:');
+        console.log(error);
+      }
+    }, 1500);
+  }
 });
 
 module.exports = app; //for unit/functional testing
