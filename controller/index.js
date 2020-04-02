@@ -4,13 +4,17 @@ exports.getAllBooks = (req, res) => {
   //response will be array of book objects
   //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
 
-  Books.find({}, (err, arr) => {
+  Books.find((err, books) => {
     if (err) res.send(err);
 
-    const newArray = arr.map(el => {
-      return { el, commentcount: el.comments ? el.comments.length : 0 };
+    const newBooks = books.map(book => {
+      return {
+        ...book._doc,
+        commentcount: book.comments ? book.comments.length : 0
+      };
     });
-    res.json({ newArray });
+
+    res.json(newBooks);
   });
 };
 
